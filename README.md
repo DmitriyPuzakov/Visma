@@ -12,6 +12,8 @@ Here you can put account number in short format and get it in long format and al
 
 ## Class description
 
+You can find the class in `/Models/BankAccount.cs`
+
 BankAccount class implements IBankAccount interface with two public methods
 
 ```
