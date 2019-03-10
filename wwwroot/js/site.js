@@ -10,7 +10,9 @@ $(document).ready(() => {
             },
             dataType:"json",
             success:(resp) => {
-                console.log(resp);
+                $("#longAccountNumber").val(resp.LongNumber);
+                $("#checkDigitValid").val(resp.CheckDigitValid);
+                $("#status").val(resp.Status);
             }
         });
     })

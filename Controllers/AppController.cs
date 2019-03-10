@@ -12,14 +12,30 @@ namespace Visma.Controllers
     {
         public IActionResult Index()
         {
-            var bank = new BankAccount("123456-785");
-            bank.GetLongFormat();
             return View();
         }
 
         [HttpPost]
-        public string Process(string shortNumber) {
-            return "ok";
+        public string Process(string shortNumber)
+        {
+            var response = new ProcessingResponse();
+
+            try
+            {
+                var bank = new BankAccount(shortNumber);
+                var longNumber = bank.GetLongFormat();
+                var checkDigitValid = bank.IsCheckDigitCorrect();
+
+                response.LongNumber = longNumber;
+                response.CheckDigitValid = checkDigitValid;
+                response.Status = "ok";
+            }
+            catch (Exception ex)
+            {
+                response.Status = ex.Message;
+            }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(response);
         }
     }
 }
