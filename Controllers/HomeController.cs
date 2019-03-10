@@ -12,6 +12,8 @@ namespace Visma.Controllers
     {
         public IActionResult Index()
         {
+            var bank = new BankAccount("123456-785");
+            bank.GetLongFormat();
             return View();
         }
 
