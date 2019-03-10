@@ -25,3 +25,6 @@ var bank = new BankAccount("123456-785");
 var longNumber = bank.GetLongFormat();
 var checkDigitValid = bank.IsCheckDigitCorrect();
 ```
+
+## Extra info
+There are more methods could be provided if needed, e.g. determination particular Bank what the account number is belong to.
