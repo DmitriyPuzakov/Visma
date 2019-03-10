@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Visma.Models
 {
-    public class BankAccount
+    public class BankAccount : IBankAccount
     {
         private string shortAccountNumber;
         private List<int> bankCodes = new List<int>() { 1, 2, 31, 33, 34, 36, 37, 38, 39, 4, 5, 6, 8 };
