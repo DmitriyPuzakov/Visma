@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Visma.Models
 {
@@ -91,24 +92,25 @@ namespace Visma.Models
             }
 
             var basic = longNumber.Substring(0, 13);
-            var checkDigit = longNumber.Substring(12, 1);
+            var checkDigit = longNumber.Substring(13, 1);
             return CalculateCheckDigit(basic).ToString() == checkDigit;
         }
 
         private int CalculateCheckDigit(string basic)
         {
-            var digits = new Dictionary<int, int>();
-            for (var i = 12; i > 0; i--)
+            var digits = new Dictionary<int, List<int>>();
+            
+            for (var i = 12; i >= 0; i--)
             {
                 var weight = (i % 2 == 0) ? 2 : 1;
-                digits.Add(int.Parse(basic[i].ToString()), weight);
+                digits.Add(i, new List<int>() { int.Parse(basic[i].ToString()), weight});
             }
 
             var products = new List<int>();
 
             foreach (var item in digits)
             {
-                products.Add(item.Key * item.Value);
+                products.Add(item.Value[0] * item.Value[1]);
             }
 
             var sum = 0;
