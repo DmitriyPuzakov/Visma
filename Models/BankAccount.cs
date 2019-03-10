@@ -11,7 +11,7 @@ namespace Visma.Models
         private List<int> sevenDigitPartBankCodes = new List<int>() { 4, 5 };
         public BankAccount(string number)
         {
-            shortAccountNumber = number;
+            shortAccountNumber = number.Trim();
         }
 
         public string GetLongFormat()
@@ -29,6 +29,10 @@ namespace Visma.Models
 
         private void ValidateInput()
         {
+            if(this.shortAccountNumber == null) {
+                this.Error("Given input is empty");
+            }
+
             if (!this.shortAccountNumber.Contains("-"))
             {
                 this.Error("Wrong input format: no hyphen");
@@ -67,7 +71,7 @@ namespace Visma.Models
             {
                 result += part2string[0];
                 part2string = part2string.Substring(1, part2string.Length - 1);
-                for (var i = 0; i < 8 - part2string.Length; i++)
+                for (var i = 0; i < 7 - part2string.Length; i++)
                 {
                     result += "0";
                 }
@@ -88,12 +92,17 @@ namespace Visma.Models
         {
             if (longNumber.Length != 14)
             {
-                this.Error("Wrong format: long account number incorrect");
+                this.Error("Check digit validation error: account number incorrect");
             }
 
             var basic = longNumber.Substring(0, 13);
             var checkDigit = longNumber.Substring(13, 1);
             return CalculateCheckDigit(basic).ToString() == checkDigit;
+        }
+
+        public bool IsCheckDigitCorrect() {
+            var longFormat = this.GetLongFormat();
+            return IsCheckDigitCorrect(longFormat);
         }
 
         private int CalculateCheckDigit(string basic)
